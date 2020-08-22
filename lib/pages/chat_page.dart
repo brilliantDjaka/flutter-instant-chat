@@ -6,11 +6,35 @@ import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
   final String sender;
-  const ChatPage({Key key, this.sender}) : super(key: key);
+  final String room;
+  const ChatPage({Key key, this.sender, this.room}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => MessagesState(
+        room,
+      ),
+      builder: (context, child) => _ChildPage(
+        sender: sender,
+        room: room,
+      ),
+    );
+  }
+}
+
+class _ChildPage extends StatelessWidget {
+  final String sender;
+  final String room;
+  
+  const _ChildPage({Key key, this.sender, this.room}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    
     var _scrollController = ScrollController();
     var _messages = Provider.of<MessagesState>(context, listen: false);
+    _messages.room = room;
+    _messages.sender = sender;
     _messages.setController = _scrollController;
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +60,7 @@ class ChatPage extends StatelessWidget {
             onPress: (text) {
               var messages = Provider.of<MessagesState>(context, listen: false);
               print(sender);
-              messages.add(sender, text);
+              messages.add(text);
             },
           )
         ],

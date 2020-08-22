@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class RoomNameInput extends StatelessWidget {
   final TextEditingController _controllerRoom = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
-  final void Function(String text,String sender) onPress;
+  final void Function(String text, String sender) onPress;
   RoomNameInput({
     Key key,
     @required this.onPress,
@@ -18,7 +19,9 @@ class RoomNameInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Input room name / Create a new one'),
-          TextField(         
+          TextField(
+            decoration:
+                InputDecoration(hintText: 'blank field will enter default room'),
             controller: _controllerRoom,
             textAlign: TextAlign.center,
           ),
@@ -33,7 +36,21 @@ class RoomNameInput extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.send),
               onPressed: () {
-                onPress(_controllerRoom.text,_controllerName.text);
+                if (_controllerName.text.isEmpty)
+                  showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        content: Text('username is required'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('Okay'),
+                            color: Theme.of(context).accentColor,
+                          )
+                        ],
+                      ));
+                else
+                  onPress(_controllerRoom.text, _controllerName.text);
               },
             ),
           )

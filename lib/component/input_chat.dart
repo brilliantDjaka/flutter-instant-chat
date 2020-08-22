@@ -7,6 +7,7 @@ class InputChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var focusNode = FocusNode();
     return Row(
       children: [
         Expanded(
@@ -17,9 +18,11 @@ class InputChat extends StatelessWidget {
                 color: Colors.black38,
               ),
               child: TextField(
+                focusNode: focusNode,
                 onSubmitted: (value) {
                   onPress(_controller.text);
                   _controller.clear();
+                  focusNode.requestFocus();
                 },
                 controller: _controller,
                 decoration: InputDecoration.collapsed(

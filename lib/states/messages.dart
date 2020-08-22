@@ -4,15 +4,19 @@ import 'package:flutter/widgets.dart';
 class MessageChildSchema {
   String sender;
   String message;
+  String room;
   MessageChildSchema({this.sender, this.message});
 }
 
 class MessagesState with ChangeNotifier {
+  String room;
+  String sender;
   Map<String, MessageChildSchema> message = {};
   DatabaseReference db;
   ScrollController _scrollController;
-  MessagesState() {
-    db = database().ref('messages');
+  MessagesState(String room) {
+    this.room = room;
+    db = database().ref(room);
     init();
     // db.push(
     //   {
@@ -25,7 +29,9 @@ class MessagesState with ChangeNotifier {
   @override
   notifyListeners() {
     super.notifyListeners();
-    if(_scrollController != null)Future.delayed(Duration(milliseconds: 200)).then((value) => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+    if (_scrollController != null)
+      Future.delayed(Duration(milliseconds: 200)).then((value) =>
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
   }
 
   init() {
@@ -58,7 +64,7 @@ class MessagesState with ChangeNotifier {
   set setController(ScrollController scrollController) =>
       _scrollController = scrollController;
 
-  add(String sender, String text) {
+  add(String text) {
     db.push({"sender": sender, "message": text});
   }
 }

@@ -6,14 +6,9 @@ import 'package:firebase/firebase.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => new MessagesState()),
-    ],
-    child: MaterialApp(
-      theme: ThemeData.dark(),
-      home: InitPage(),
-    ),
+  runApp(MaterialApp(
+    theme: ThemeData.dark(),
+    home: InitPage(),
   ));
 }
 
@@ -25,10 +20,11 @@ class InitPage extends StatelessWidget {
         title: Text('Init Page'),
       ),
       body: Center(
-        child: RoomNameInput(onPress: (String text,String sender) {
+        child: RoomNameInput(onPress: (String text, String sender) {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return ChatPage(
-              sender: sender, 
+              sender: sender,
+              room: text.isEmpty ? 'default' : text,
             );
           }));
         }),
