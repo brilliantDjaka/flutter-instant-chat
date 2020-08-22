@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RoomNameInput extends StatelessWidget {
   final TextEditingController _controllerRoom = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
-  final void Function(String text) onPress;
+  final void Function(String text,String sender) onPress;
   RoomNameInput({
     Key key,
     @required this.onPress,
@@ -18,15 +18,13 @@ class RoomNameInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Input room name / Create a new one'),
-          TextField(
-            onSubmitted: (_value) => onPress(_controllerRoom.text),
+          TextField(         
             controller: _controllerRoom,
             textAlign: TextAlign.center,
           ),
           Padding(padding: EdgeInsets.all(10)),
           Text('Username'),
           TextField(
-            onSubmitted: (_value) => onPress(_controllerName.text),
             controller: _controllerName,
             textAlign: TextAlign.center,
           ),
@@ -35,7 +33,7 @@ class RoomNameInput extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.send),
               onPressed: () {
-                onPress(_controllerRoom.text);
+                onPress(_controllerRoom.text,_controllerName.text);
               },
             ),
           )

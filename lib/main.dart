@@ -25,9 +25,11 @@ class InitPage extends StatelessWidget {
         title: Text('Init Page'),
       ),
       body: Center(
-        child: RoomNameInput(onPress: (String text) {
+        child: RoomNameInput(onPress: (String text,String sender) {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return ChatPage();
+            return ChatPage(
+              sender: sender, 
+            );
           }));
         }),
       ),

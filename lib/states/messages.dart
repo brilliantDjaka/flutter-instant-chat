@@ -12,7 +12,7 @@ class MessagesState with ChangeNotifier {
   DatabaseReference db;
   ScrollController _scrollController;
   MessagesState() {
-    db = database().ref('coba');
+    db = database().ref('messages');
     init();
     // db.push(
     //   {

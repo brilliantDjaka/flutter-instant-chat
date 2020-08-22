@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
+  final String sender;
+  const ChatPage({Key key, this.sender}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var _scrollController = ScrollController();
@@ -33,8 +35,8 @@ class ChatPage extends StatelessWidget {
           InputChat(
             onPress: (text) {
               var messages = Provider.of<MessagesState>(context, listen: false);
-              print(text);
-              messages.add('briaan', text);
+              print(sender);
+              messages.add(sender, text);
             },
           )
         ],
