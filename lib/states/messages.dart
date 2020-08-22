@@ -17,14 +17,8 @@ class MessagesState with ChangeNotifier {
   MessagesState(String room) {
     this.room = room;
     db = database().ref(room);
-    init();
-    // db.push(
-    //   {
-    //     "sender":'tesuto',
-    //     "message":'test',
-    //   }
-    // );
-    onAdd();
+    _init();
+    _onAdd();
   }
   @override
   notifyListeners() {
@@ -34,7 +28,7 @@ class MessagesState with ChangeNotifier {
           _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
   }
 
-  init() {
+  _init() {
     db.once('value').then((value) {
       Map data = value.snapshot.toJson();
       if (data.isEmpty) {
@@ -49,7 +43,7 @@ class MessagesState with ChangeNotifier {
     });
   }
 
-  onAdd() {
+  _onAdd() {
     db.onChildAdded.forEach((element) {
       print(element.snapshot.toJson());
       Map data = element.snapshot.toJson();

@@ -39,7 +39,7 @@ class _ChildPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat Page',
+          '$room room',
         ),
       ),
       body: Column(

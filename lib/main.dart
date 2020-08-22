@@ -17,7 +17,7 @@ class InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Init Page'),
+        title: Text('Instant Chat App'),
       ),
       body: Center(
         child: RoomNameInput(onPress: (String text, String sender) {
