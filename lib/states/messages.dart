@@ -14,7 +14,9 @@ class MessagesState with ChangeNotifier {
   Map<String, MessageChildSchema> message = {};
   DatabaseReference db;
   ScrollController _scrollController;
+  bool _isLoading = true;
   MessagesState(String room) {
+    _isLoading = true;
     this.room = room;
     db = database().ref(room);
     _init();
@@ -31,7 +33,9 @@ class MessagesState with ChangeNotifier {
   _init() {
     db.once('value').then((value) {
       Map data = value.snapshot.toJson();
-      if (data.isEmpty) {
+      if (data == null || data.isEmpty) {
+        _isLoading = false;
+        notifyListeners();
         return;
       }
       data.forEach((key, value) {
@@ -39,6 +43,7 @@ class MessagesState with ChangeNotifier {
         message[key] = MessageChildSchema(
             sender: value["sender"], message: value["message"]);
       });
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -61,4 +66,6 @@ class MessagesState with ChangeNotifier {
   add(String text) {
     db.push({"sender": sender, "message": text});
   }
+
+  bool get loadingState => _isLoading;
 }
