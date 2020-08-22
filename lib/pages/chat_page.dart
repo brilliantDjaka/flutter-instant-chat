@@ -3,6 +3,7 @@ import 'package:chat_app/component/input_chat.dart';
 import 'package:chat_app/states/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ChatPage extends StatelessWidget {
   final String sender;
@@ -25,21 +26,19 @@ class ChatPage extends StatelessWidget {
 class _ChildPage extends StatelessWidget {
   final String sender;
   final String room;
-  
   const _ChildPage({Key key, this.sender, this.room}) : super(key: key);
-  
   @override
   Widget build(BuildContext context) {
-    
     var _scrollController = ScrollController();
     var _messages = Provider.of<MessagesState>(context, listen: false);
     _messages.room = room;
     _messages.sender = sender;
     _messages.setController = _scrollController;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat Page',
+          '$room room',
         ),
       ),
       body: Column(
@@ -47,6 +46,12 @@ class _ChildPage extends StatelessWidget {
         children: [
           Expanded(
               child: Consumer<MessagesState>(builder: (context, value, child) {
+            if (value.loadingState == true) return Center(
+              child: SpinKitFoldingCube(
+                color: Theme.of(context).accentColor,
+                size: 30,
+              ),
+            );
             return ListView.builder(
                 controller: _scrollController,
                 itemCount: value.message.length,

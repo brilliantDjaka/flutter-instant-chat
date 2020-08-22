@@ -12,16 +12,17 @@ class RoomNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width * 0.25);
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.25,
+      width: (MediaQuery.of(context).size.width < 340) ? double.infinity:341,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Input room name / Create a new one'),
           TextField(
-            decoration:
-                InputDecoration(hintText: 'blank field will enter default room'),
+            decoration: InputDecoration(
+                hintText: 'blank field will enter default room'),
             controller: _controllerRoom,
             textAlign: TextAlign.center,
           ),
