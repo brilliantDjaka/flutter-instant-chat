@@ -64,7 +64,7 @@ class _ChildPage extends StatelessWidget {
           InputChat(
             onPress: (text) {
               var messages = Provider.of<MessagesState>(context, listen: false);
-              print(sender);
+
               messages.add(text);
             },
           )

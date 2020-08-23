@@ -1,9 +1,6 @@
 import 'package:chat_app/component/room_name_input.dart';
 import 'package:chat_app/pages/chat_page.dart';
-import 'package:chat_app/states/messages.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase/firebase.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -24,7 +21,7 @@ class InitPage extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return ChatPage(
               sender: sender,
-              room: text.isEmpty ? 'default' : text,
+              room: text,
             );
           }));
         }),

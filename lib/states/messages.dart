@@ -39,7 +39,6 @@ class MessagesState with ChangeNotifier {
         return;
       }
       data.forEach((key, value) {
-        print(value);
         message[key] = MessageChildSchema(
             sender: value["sender"], message: value["message"]);
       });
@@ -50,7 +49,6 @@ class MessagesState with ChangeNotifier {
 
   _onAdd() {
     db.onChildAdded.forEach((element) {
-      print(element.snapshot.toJson());
       Map data = element.snapshot.toJson();
       message[element.snapshot.key] = MessageChildSchema(
         sender: data["sender"],

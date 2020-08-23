@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class RoomNameInput extends StatelessWidget {
   final TextEditingController _controllerRoom = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
   final void Function(String text, String sender) onPress;
+  final _formKey = GlobalKey<FormState>();
   RoomNameInput({
     Key key,
     @required this.onPress,
@@ -12,50 +12,51 @@ class RoomNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width * 0.25);
     return SizedBox(
-      width: (MediaQuery.of(context).size.width < 340) ? double.infinity:341,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Input room name / Create a new one'),
-          TextField(
-            decoration: InputDecoration(
-                hintText: 'blank field will enter default room'),
-            controller: _controllerRoom,
-            textAlign: TextAlign.center,
-          ),
-          Padding(padding: EdgeInsets.all(10)),
-          Text('Username'),
-          TextField(
-            controller: _controllerName,
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () {
-                if (_controllerName.text.isEmpty)
-                  showDialog(
-                      context: context,
-                      child: AlertDialog(
-                        content: Text('username is required'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text('Okay'),
-                            color: Theme.of(context).accentColor,
-                          )
-                        ],
-                      ));
-                else
-                  onPress(_controllerRoom.text, _controllerName.text);
+      width: (MediaQuery.of(context).size.width < 340) ? double.infinity : 341,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Input room name / Create a new one'),
+            TextFormField(
+              validator: (value) {
+                if (value.isEmpty)
+                  _controllerRoom.text = 'default';
+                else if (value.contains(' '))
+                  return 'instead space please use "-"';
+                return null;
               },
+              decoration: InputDecoration(
+                  hintText: 'blank field will enter default room'),
+              controller: _controllerRoom,
+              textAlign: TextAlign.center,
             ),
-          )
-        ],
+            Padding(padding: EdgeInsets.all(10)),
+            Text('Username'),
+            TextFormField(
+              controller: _controllerName,
+              validator: (value) {
+                if (value.isEmpty)
+                  return 'username is required';
+                return null;
+              },
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  if (_formKey.currentState.validate())
+                    onPress(_controllerRoom.text, _controllerName.text);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
