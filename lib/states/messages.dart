@@ -31,7 +31,7 @@ class MessagesState with ChangeNotifier {
   }
 
   _init() {
-    db.limitToLast(3).onChildAdded.listen((event) {
+    db.limitToLast(10).onChildAdded.listen((event) {
       Map<String,dynamic> data = event.snapshot.toJson();
       String key = event.snapshot.key;
       if (data == null || data.isEmpty) {
