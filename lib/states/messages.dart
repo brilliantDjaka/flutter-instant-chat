@@ -15,12 +15,12 @@ class MessagesState with ChangeNotifier {
   DatabaseReference db;
   ScrollController _scrollController;
   bool _isLoading = true;
+
   MessagesState(String room) {
     _isLoading = true;
     this.room = room;
     db = database().ref(room);
     _init();
-    _onAdd();
   }
   @override
   notifyListeners() {
@@ -31,31 +31,17 @@ class MessagesState with ChangeNotifier {
   }
 
   _init() {
-    db.once('value').then((value) {
-      Map data = value.snapshot.toJson();
+    db.limitToLast(3).onChildAdded.listen((event) {
+      Map<String,dynamic> data = event.snapshot.toJson();
+      String key = event.snapshot.key;
       if (data == null || data.isEmpty) {
         _isLoading = false;
         notifyListeners();
         return;
       }
-      data.forEach((key, value) {
-        print(value);
         message[key] = MessageChildSchema(
-            sender: value["sender"], message: value["message"]);
-      });
+            sender: data["sender"], message: data["message"]);
       _isLoading = false;
-      notifyListeners();
-    });
-  }
-
-  _onAdd() {
-    db.onChildAdded.forEach((element) {
-      print(element.snapshot.toJson());
-      Map data = element.snapshot.toJson();
-      message[element.snapshot.key] = MessageChildSchema(
-        sender: data["sender"],
-        message: data["message"],
-      );
       notifyListeners();
     });
   }
