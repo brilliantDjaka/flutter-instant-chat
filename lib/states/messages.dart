@@ -32,18 +32,26 @@ class MessagesState with ChangeNotifier {
 
   _init() {
     db.limitToLast(10).onChildAdded.listen((event) {
-      Map<String,dynamic> data = event.snapshot.toJson();
+      Map<String, dynamic> data = event.snapshot.toJson();
       String key = event.snapshot.key;
       if (data == null || data.isEmpty) {
         _isLoading = false;
         notifyListeners();
         return;
       }
-        message[key] = MessageChildSchema(
-            sender: data["sender"], message: data["message"]);
+      message[key] =
+          MessageChildSchema(sender: data["sender"], message: data["message"]);
       _isLoading = false;
       notifyListeners();
     });
+    if (_isLoading) {
+      db.onValue.first.then((value) {
+        if (!value.snapshot.exists()) {
+          _isLoading = false;
+          notifyListeners();
+        }
+      });
+    }
   }
 
   set setController(ScrollController scrollController) =>
