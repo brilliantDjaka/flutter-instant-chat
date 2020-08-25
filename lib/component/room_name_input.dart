@@ -5,10 +5,10 @@ class RoomNameInput extends StatelessWidget {
   final TextEditingController _controllerName = TextEditingController();
   final void Function(String text, String sender) onPress;
   final _formKey = GlobalKey<FormState>();
-  RoomNameInput({
-    Key key,
-    @required this.onPress,
-  }) : super(key: key);
+  RoomNameInput({Key key, @required this.onPress, String room})
+      : super(key: key) {
+    _controllerRoom.text = room;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,7 @@ class RoomNameInput extends StatelessWidget {
             TextFormField(
               controller: _controllerName,
               validator: (value) {
-                if (value.isEmpty)
-                  return 'username is required';
+                if (value.isEmpty) return 'username is required';
                 return null;
               },
               textAlign: TextAlign.center,

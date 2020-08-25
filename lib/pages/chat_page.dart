@@ -34,11 +34,42 @@ class _ChildPage extends StatelessWidget {
     _messages.room = room;
     _messages.sender = sender;
     _messages.setController = _scrollController;
-    
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '$room room',
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '$room room',
+            ),
+            IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  var _controller = TextEditingController();
+                  _controller.text = 'https://brilliantdjaka.github.io/flutter-instant-chat/#/$room';
+                  showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('share this link'),
+                            TextField(
+                              controller: _controller,
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          RaisedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('close'),
+                            color: Theme.of(context).accentColor,
+                          )
+                        ],
+                      ));
+                })
+          ],
         ),
       ),
       body: Column(
@@ -46,12 +77,13 @@ class _ChildPage extends StatelessWidget {
         children: [
           Expanded(
               child: Consumer<MessagesState>(builder: (context, value, child) {
-            if (value.loadingState == true) return Center(
-              child: SpinKitFoldingCube(
-                color: Theme.of(context).accentColor,
-                size: 30,
-              ),
-            );
+            if (value.loadingState == true)
+              return Center(
+                child: SpinKitFoldingCube(
+                  color: Theme.of(context).accentColor,
+                  size: 30,
+                ),
+              );
             return ListView.builder(
                 controller: _scrollController,
                 itemCount: value.message.length,
