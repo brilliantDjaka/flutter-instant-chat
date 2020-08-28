@@ -11,6 +11,7 @@ Built by <a href='https://flutter.dev/'>flutter</a> & <a href='https://firebase.
 - [x] Custom Chat Room
 - [x] Default Chat Room
 - [x] Dark Theme
+- [x] Share Room URL
 
 ## Local dev setup
 ### Requirements
