@@ -1,4 +1,4 @@
-# chat_app
+# Instant Chat App
 link : https://brilliantdjaka.github.io/flutter-instant-chat/
 <br>
 <br>
