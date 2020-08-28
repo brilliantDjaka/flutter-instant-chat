@@ -25,11 +25,11 @@ Built by <a href='https://flutter.dev/'>flutter</a> & <a href='https://firebase.
 
 ## Screenshot
 ### Homepage
-<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/homepage.png" width="400"></img>
+<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/homepage.png"></img>
 
 ### Chatroom
-<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/chatroom.png" width="400"></img>
+<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/chatroom.png"></img>
 
 ### Sharelink
-<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/sharelink.png" width="400"></img>
+<img src="https://raw.githubusercontent.com/brilliantDjaka/flutter-instant-chat/master/screenshots/sharelink.png"></img>
 
